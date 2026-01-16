@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,43 +19,69 @@
     </nav>
   </header>
 
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Sort & Filter</h2>
+
+    <div class="filter-group">
+      <label for="price">Price</label>
+      <select id="price">
+        <option value="">Any</option>
+        <option value="low-high">Low → High</option>
+        <option value="high-low">High → Low</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="date">Date</label>
+      <select id="date">
+        <option value="">Any</option>
+        <option value="soon">Soonest</option>
+        <option value="latest">Latest</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="place">Location</label>
+      <select id="place">
+        <option value="">All</option>
+        <option value="la">LA</option>
+        <option value="ny">NY</option>
+        <option value="london">London</option>
+      </select>
+    </div>
+  </aside>
+
   <!-- MAIN CONTENT -->
-  <main class="container">
+  <main class="container content">
     <h1>Ticket Marketplace</h1>
 
     <section class="marketplace">
-      <div class="card">
-        <div class="image-placeholder">
-  EVENT IMAGE
-</div>
 
+      <div class="card">
+        <div class="image-placeholder">EVENT IMAGE</div>
         <h3>Music Festival</h3>
-        <p>June 20, 2026 � LA</p>
+        <p>June 20, 2026 • LA</p>
         <span>$59</span>
         <button>Buy Ticket</button>
       </div>
 
       <div class="card">
-        <div class="image-placeholder">
-  EVENT IMAGE
-</div>
-
+        <div class="image-placeholder">EVENT IMAGE</div>
         <h3>Tech Conference</h3>
-        <p>July 12, 2026 � NY</p>
+        <p>July 12, 2026 • NY</p>
         <span>$120</span>
         <button>Buy Ticket</button>
       </div>
 
       <div class="card">
-        <div class="image-placeholder">
-  EVENT IMAGE
-</div>
-
+        <div class="image-placeholder">EVENT IMAGE</div>
         <h3>Football Finals</h3>
-        <p>August 5, 2026 � London</p>
+        <p>August 5, 2026 • London</p>
         <span>$90</span>
         <button>Buy Ticket</button>
       </div>
+
     </section>
   </main>
 

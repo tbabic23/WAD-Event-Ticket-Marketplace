@@ -1,4 +1,4 @@
-* {
+﻿* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,18 +12,23 @@ body {
 
 /* NAVBAR */
 .navbar {
-    background: #ffffff;
+    background: rgba(0,63,167,0.4);
+    background: linear-gradient(285deg, rgba(0,63,167,0.4) 15%, #77cbf3 80%);
     padding: 20px 40px;
+    color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #2563eb;
+    color: black;
 }
 
 .nav-links a {

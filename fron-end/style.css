@@ -1,4 +1,4 @@
-* {
+﻿* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -11,49 +11,69 @@ body {
 
 /* NAVBAR */
 .navbar {
-	background: #ffffff;
+	background: rgba(0,63,167,0.4);
+	background: linear-gradient(285deg, rgba(0,63,167,0.4) 15%, #77cbf3 80%);
 	padding: 20px 40px;
+	padding-left: 300px; /* 👈 SIDEBAR WIDTH + GAP */
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
 }
 
 .logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: #2563eb;
+	margin-left: 0px; /* sidebar width + small gap */
 }
 
-.nav-links a {
-	margin-left: 20px;
-	text-decoration: none;
-	color: #333;
-	font-size: 15px;
+
+
+/* SIDEBAR (STUCK TO LEFT) */
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 260px;
+	height: 100vh;
+	background: #2c2d32;
+	color: white;
+	padding: 20px; /* no top padding needed, sidebar covers navbar */
+	z-index: 2000; /* HIGHER than navbar */
+	border-right: 1px solid #e5e7eb;
 }
 
-	.nav-links a:hover {
-		color: #2563eb;
+
+	.sidebar h2 {
+		margin-bottom: 20px;
+		font-size: 18px;
 	}
 
-.register {
-	background: #2563eb;
-	color: white !important;
-	padding: 8px 14px;
-	border-radius: 6px;
+.filter-group {
+	margin-bottom: 20px;
 }
 
-/* MAIN */
-.container {
-	max-width: 1200px;
-	margin: 60px auto;
-	padding: 0 20px;
-	text-align: center;
-}
-
-	.container h1 {
-		margin-bottom: 40px;
+	.filter-group label {
+		display: block;
+		margin-bottom: 6px;
+		font-size: 14px;
+		font-weight: bold;
 	}
+
+	.filter-group select {
+		width: 100%;
+		padding: 8px;
+		border-radius: 6px;
+		border: 1px solid #ddd;
+	}
+
+/* MAIN CONTENT SHIFTED RIGHT */
+.content {
+	margin-left: 260px;
+	padding: 120px 40px 40px;
+}
+
 
 /* MARKETPLACE */
 .marketplace {
@@ -62,18 +82,13 @@ body {
 	gap: 30px;
 }
 
+/* CARD */
 .card {
 	background: white;
 	border-radius: 12px;
 	overflow: hidden;
 	box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
-
-	.card img {
-		width: 100%;
-		height: 180px;
-		object-fit: cover;
-	}
 
 	.card h3 {
 		margin: 15px;
@@ -98,16 +113,17 @@ body {
 		margin: 0 15px 20px;
 		padding: 10px;
 		border: none;
-		background: #2563eb;
+		background: #3c5adc;
 		color: white;
 		border-radius: 6px;
 		cursor: pointer;
 	}
 
 		.card button:hover {
-			background: #1e40af;
+			background: #345B1A;
 		}
 
+/* IMAGE PLACEHOLDER */
 .image-placeholder {
 	width: 100%;
 	height: 180px;
@@ -118,6 +134,56 @@ body {
 	color: #9ca3af;
 	font-size: 14px;
 	font-weight: bold;
-	letter-spacing: 1px;
 }
 
+.nav-links a {
+	margin-left: 20px;
+	text-decoration: none;
+	font-size: 15px;
+	padding: 8px 12px;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+	color: black; 
+}
+
+	/* Normal links on hover */
+	.nav-links a:not(.register):hover {
+		background: rgba(255,255,255,0.2); /* subtle hover highlight */
+		color: white;
+	}
+
+	/* Register button */
+	.nav-links a.register {
+		background: #2563eb;
+		color: white;
+		font-weight: bold;
+		padding: 8px 18px;
+		border-radius: 8px;
+		transition: all 0.3s ease;
+	}
+
+		.nav-links a.register:hover {
+			background: #1e40af;
+		}
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 260px;
+		height: 100vh;
+		background: #2c2d32;
+		color: white;
+		padding: 100px 20px 20px;
+		border-right: 1px solid #e5e7eb;
+		z-index: 1100; /* HIGHER than navbar */
+	}
+
+	.content {
+		margin-left: 0;
+		padding: 30px 20px;
+	}
+}

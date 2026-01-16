@@ -12,7 +12,8 @@ body {
 
 /* NAVBAR */
 .navbar {
-    background: #ffffff;
+    background: rgba(0,63,167,0.4);
+    background: linear-gradient(285deg, rgba(0,63,167,0.4) 15%, #77cbf3 80%);
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -24,6 +25,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     color: #2563eb;
+    color: black;
 }
 
 .nav-links a {
