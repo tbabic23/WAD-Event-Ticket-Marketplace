@@ -1,0 +1,11 @@
+    <header class="navbar">
+        <div class="logo">TicketMarket</div>
+        <nav class="nav-links">
+            <a href="index.html">Tickets</a>
+            <a href="about.html">About Us</a>
+            <a routerLink="/login">Login</a>
+            <a href="#" class="register">Register</a>
+            <p *ngIf="username"> Logged in as: {{ username }}</p>
+        </nav>
+    </header>
+<router-outlet></router-outlet>
