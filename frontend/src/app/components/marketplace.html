@@ -1,0 +1,47 @@
+﻿<aside class="sidebar">
+    <h1>
+        <a routerLink="/" class="logo-link">TicketMarket</a>
+    </h1>
+    <h2>Sort & Filter</h2>
+    <div class="filter-group">
+        <label>Price</label>
+        <select>
+            <option value="">Any</option>
+            <option value="low-high">Low → High</option>
+            <option value="high-low">High → Low</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label>Date</label>
+        <select>
+            <option value="">Any</option>
+            <option value="soon">Soonest</option>
+            <option value="latest">Latest</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label>Location</label>
+        <select>
+            <option value="">All</option>
+            <option value="la">LA</option>
+            <option value="ny">NY</option>
+            <option value="london">London</option>
+        </select>
+    </div>
+</aside>
+
+
+<main class="container content">
+
+    <section class="marketplace">
+        <div class="card" *ngFor="let ticket of tickets">
+            <div class="image-placeholder">EVENT IMAGE</div>
+            <h3>{{ ticket.title }}</h3>
+            <p>{{ ticket.date }} • {{ ticket.city }}</p>
+            <span>${{ ticket.price }}</span>
+            <button (click)="buy(ticket)">Buy Ticket</button>
+        </div>
+    </section>
+</main>
