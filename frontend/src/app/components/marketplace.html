@@ -1,47 +1,73 @@
 ﻿<aside class="sidebar">
-    <h1>
-        <a routerLink="/" class="logo-link">TicketMarket</a>
-    </h1>
-    <h2>Sort & Filter</h2>
-    <div class="filter-group">
-        <label>Price</label>
-        <select>
-            <option value="">Any</option>
-            <option value="low-high">Low → High</option>
-            <option value="high-low">High → Low</option>
-        </select>
+    <div>
+        <h1>
+            <a routerLink="/" class="logo-link">TicketMarket</a>
+        </h1>
+        <h2>Sort & Filter</h2>
+        <div class="filter-group">
+            <label>Price</label>
+            <select>
+                <option value="">Any</option>
+                <option value="low-high">Low → High</option>
+                <option value="high-low">High → Low</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Date</label>
+            <select>
+                <option value="">Any</option>
+                <option value="soon">Soonest</option>
+                <option value="latest">Latest</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Location</label>
+            <select>
+                <option value="">All</option>
+                <option value="la">LA</option>
+                <option value="ny">NY</option>
+                <option value="london">London</option>
+            </select>
+        </div>
     </div>
 
-    <div class="filter-group">
-        <label>Date</label>
-        <select>
-            <option value="">Any</option>
-            <option value="soon">Soonest</option>
-            <option value="latest">Latest</option>
-        </select>
-    </div>
-
-    <div class="filter-group">
-        <label>Location</label>
-        <select>
-            <option value="">All</option>
-            <option value="la">LA</option>
-            <option value="ny">NY</option>
-            <option value="london">London</option>
-        </select>
+    <div class="sidebar-bottom">
+        <button *ngIf="canCreateEvents" class="create-event-btn" (click)="openCreateModal()">
+            Create Event
+        </button>
     </div>
 </aside>
 
 
 <main class="container content">
-
     <section class="marketplace">
-        <div class="card" *ngFor="let ticket of tickets">
-            <div class="image-placeholder">EVENT IMAGE</div>
-            <h3>{{ ticket.title }}</h3>
-            <p>{{ ticket.date }} • {{ ticket.city }}</p>
-            <span>${{ ticket.price }}</span>
-            <button (click)="buy(ticket)">Buy Ticket</button>
+        <div class="card" *ngFor="let event of events">
+            <div class="image-placeholder" [style.background-image]="event.image_url ? 'url(' + event.image_url + ')' : ''">
+                <span *ngIf="!event.image_url">Sample Image</span>
+            </div>
+            <h3>{{ event.title }}</h3>
+            <p class="event-date">{{ formatEventDate(event.event_date, event.event_end_date) }}</p>
+            <p class="venue">{{ event.venue }}{{ event.city ? ' • ' + event.city : '' }}</p>
+
+            <button *ngIf="!isEventCreator(event)" (click)="buyTicket(event)">Buy Ticket</button>
+
+            <div *ngIf="isEventCreator(event)" class="creator-actions">
+                <button class="manage-btn" (click)="openManageModal(event.id)">Manage Event</button>
+            </div>
         </div>
     </section>
+
+    <app-event-modal
+        *ngIf="showModal"
+        (close)="closeModal()"
+        (eventCreated)="onEventCreated()">
+    </app-event-modal>
+
+    <app-manage-event-modal
+        *ngIf="showManageModal && selectedEventId"
+        [eventId]="selectedEventId"
+        (close)="closeManageModal()">
+    </app-manage-event-modal>
 </main>

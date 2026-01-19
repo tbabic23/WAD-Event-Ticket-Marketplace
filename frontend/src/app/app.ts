@@ -1,6 +1,7 @@
 import { Component, signal, OnInit} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,21 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.css',
 })
 export class App implements OnInit{
-  username: string | null = null;
+  isLoggedIn = false;
+  user: any = null;
 
-  
+  constructor(private authService: AuthService) {}
+
   ngOnInit() {
-    this.username = localStorage.getItem('username');
-    console.log(localStorage.getItem('username'));
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      this.isLoggedIn = isAuth;
+      if (isAuth) {
+        this.user = this.authService.getUser();
+      } else {
+        this.user = null;
+      }
+    });
   }
+
   protected readonly title = signal('frontend');
 }

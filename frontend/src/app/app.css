@@ -1,16 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #f4f6f8;
-    color: #333;
-}
-
-/* NAVBAR */
 .navbar {
     background: rgba(0,63,167,0.4);
     background: linear-gradient(285deg, rgba(0,63,167,0.4) 15%, #77cbf3 80%);
@@ -22,7 +9,10 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
+    width: 100%;
     z-index: 1000;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .logo-link {
@@ -52,6 +42,13 @@ body {
     color: white !important;
     padding: 8px 14px;
     border-radius: 6px;
+}
+
+.user-greeting {
+    margin-left: 20px;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 /* ABOUT */

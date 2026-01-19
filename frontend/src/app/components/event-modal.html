@@ -1,0 +1,117 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Create New Event</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    
+
+    <form (ngSubmit)="createEvent()">
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-row">
+        <label>Event Title *</label>
+        <input [(ngModel)]="title" name="title" type="text" placeholder="Enter event title" [disabled]="isLoading" required>
+      </div>
+
+      <div class="form-row">
+        <label>Description</label>
+        <textarea [(ngModel)]="description" name="description" placeholder="Describe your event" [disabled]="isLoading" rows="4"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label>Venue *</label>
+        <input [(ngModel)]="venue" name="venue" type="text" placeholder="Event venue" [disabled]="isLoading" required>
+      </div>
+
+      <div class="form-row">
+        <label>Address</label>
+        <input [(ngModel)]="address" name="address" type="text" placeholder="Street address" [disabled]="isLoading">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label>City</label>
+          <input [(ngModel)]="city" name="city" type="text" placeholder="City" [disabled]="isLoading">
+        </div>
+
+        <div class="form-row">
+          <label>Country</label>
+          <input [(ngModel)]="country" name="country" type="text" placeholder="Country" [disabled]="isLoading">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Start Date *</label>
+          <input [(ngModel)]="event_date" name="event_date" type="datetime-local" [disabled]="isLoading" required>
+        </div>
+
+        <div class="form-row">
+          <label>End Date</label>
+          <input [(ngModel)]="event_end_date" name="event_end_date" type="datetime-local" [disabled]="isLoading">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Category</label>
+        <input [(ngModel)]="category" name="category" type="text" placeholder="e.g., Music, Sports, Conference" [disabled]="isLoading">
+      </div>
+
+      <div class="form-row">
+        <label>Image URL</label>
+        <input [(ngModel)]="image_url" name="image_url" type="url" placeholder="https://example.com/image.jpg" [disabled]="isLoading">
+      </div>
+
+      <div class="ticket-types-section">
+        <div class="section-header">
+          <label>Ticket Types *</label>
+          <button type="button" class="add-ticket-btn" (click)="addTicketType()" [disabled]="isLoading">+</button>
+        </div>
+
+        <div *ngFor="let ticket of ticketTypes; let i = index" class="ticket-type-row">
+          <input
+            [(ngModel)]="ticket.name"
+            [name]="'ticketName' + i"
+            type="text"
+            placeholder="Name (e.g., General Admission)"
+            [disabled]="isLoading"
+            class="ticket-name">
+          <input
+            [(ngModel)]="ticket.price"
+            [name]="'ticketPrice' + i"
+            type="number"
+            placeholder="Price"
+            [disabled]="isLoading"
+            class="ticket-price"
+            min="0"
+            step="0.01">
+          <input
+            [(ngModel)]="ticket.quantity"
+            [name]="'ticketQuantity' + i"
+            type="number"
+            placeholder="Quantity"
+            [disabled]="isLoading"
+            class="ticket-quantity"
+            min="1">
+          <button
+            type="button"
+            class="remove-ticket-btn"
+            (click)="removeTicketType(i)"
+            [disabled]="isLoading || ticketTypes.length === 1">
+            &times;
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="closeModal()" [disabled]="isLoading">Cancel</button>
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          {{ isLoading ? 'Creating...' : 'Create Event' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,18 +1,21 @@
 ﻿<header class="navbar">
     <div class="logo">
-    <a routerLink="/" class="logo-link">TicketMarket</a>
-</div>
+        <a routerLink="/" class="logo-link">TicketMarket</a>
+    </div>
 
     <nav class="nav-links">
         <a routerLink="/tickets">Marketplace</a>
         <a routerLink="/about">About Us</a>
-        <a routerLink="/login">Login</a>
-        <a routerLink="/register" class="register">Register</a>
-        
 
-        <p *ngIf="username">
-            Logged in as: {{ username }}
-        </p>
+        <ng-container *ngIf="!isLoggedIn">
+            <a routerLink="/login">Login</a>
+            <a routerLink="/register" class="register">Register</a>
+        </ng-container>
+
+        <ng-container *ngIf="isLoggedIn">
+            <span class="user-greeting">Hello, {{ user?.first_name || user?.username }}!</span>
+            <a routerLink="/profile" class="register">Profile</a>
+        </ng-container>
     </nav>
 </header>
 
