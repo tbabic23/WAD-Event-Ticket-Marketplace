@@ -28,11 +28,13 @@ export class EventService {
 
   createEvent(eventData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, eventData, { headers: this.getHeaders() });
-  }
+    }
 
-  updateEvent(id: number, eventData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, eventData, { headers: this.getHeaders() });
-  }
+    updateEvent(id: number, data: any): Observable<any> {
+        return this.http.put(`${this.apiUrl}/${id}`, data, { headers: this.getHeaders() });
+    }
+
+
 
   deleteEvent(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });

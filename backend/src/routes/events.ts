@@ -129,23 +129,53 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const { title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status } = req.body;
+    const { id } = req.params;
+    const {
+        title,
+        description,
+        venue,
+        address,
+        city,
+        country,
+        event_date,
+        event_end_date,
+        category,
+        image_url,
+        status,
+        is_official
+    } = req.body;
 
-  db.run(
-    'UPDATE events SET title = ?, description = ?, venue = ?, address = ?, city = ?, country = ?, event_date = ?, event_end_date = ?, category = ?, image_url = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-    [title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status, id],
-    function(err) {
-      if (err) {
-        return res.status(500).json({ error: 'Database error' });
-      }
-      if (this.changes === 0) {
-        return res.status(404).json({ error: 'Event not found' });
-      }
-      res.json({ message: 'Event updated successfully' });
-    }
-  );
+    db.run(
+        `UPDATE events 
+     SET title = ?, description = ?, venue = ?, address = ?, city = ?, country = ?, 
+         event_date = ?, event_end_date = ?, category = ?, image_url = ?, status = ?, is_official = ?, updated_at = CURRENT_TIMESTAMP 
+     WHERE id = ?`,
+        [
+            title,
+            description,
+            venue,
+            address,
+            city,
+            country,
+            event_date,
+            event_end_date,
+            category,
+            image_url,
+            status,
+            is_official ? 1 : 0,
+            id
+        ],
+        function (err) {
+            if (err) return res.status(500).json({ error: 'Database error' });
+            if (this.changes === 0) return res.status(404).json({ error: 'Event not found' });
+            res.json({ message: 'Event updated successfully', is_official: is_official ? 1 : 0 });
+        }
+    );
 });
+
+
+
+
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;

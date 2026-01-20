@@ -4,11 +4,12 @@ import { EventService } from '../services/event.service';
 import { AuthService } from '../services/auth.service';
 import { EventModalComponent } from './event-modal';
 import { ManageEventModalComponent } from './manage-event-modal';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-marketplace',
     standalone: true,
-    imports: [CommonModule, EventModalComponent, ManageEventModalComponent],
+    imports: [CommonModule, EventModalComponent, ManageEventModalComponent, RouterLink],
     templateUrl: './marketplace.html',
     styleUrls: ['./marketplace.css']
 })

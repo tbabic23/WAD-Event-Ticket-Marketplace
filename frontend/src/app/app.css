@@ -19,12 +19,16 @@
     text-decoration: none;
     color: black;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+.logo.hidden {
+    visibility: hidden; /* keeps space but hides the logo */
 }
 
-    .logo-link:hover {
-        color: #666; 
-    }
+
+
 
 .nav-links a {
     margin-left: 20px;

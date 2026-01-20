@@ -1,92 +1,101 @@
 <div class="modal-overlay" (click)="closeModal()">
-  <div class="modal-content-full" (click)="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>Manage Event</h2>
-      <button class="close-btn" (click)="closeModal()">&times;</button>
-    </div>
-
-      <div *ngIf="isLoading" class="loading">Loading...</div>
-
-      <div *ngIf="!isLoading && event" class="event-details">
-        <div class="detail-row">
-          <strong>Title:</strong>
-          <span>{{ event.title }}</span>
+    <div class="modal-content-full" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>Manage Event</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
         </div>
 
-        <div class="detail-row" *ngIf="event.description">
-          <strong>Description:</strong>
-          <span>{{ event.description }}</span>
-        </div>
+        <div *ngIf="isLoading" class="loading">Loading...</div>
 
-        <div class="detail-row">
-          <strong>Venue:</strong>
-          <span>{{ event.venue }}</span>
-        </div>
-
-        <div class="detail-row" *ngIf="event.address">
-          <strong>Address:</strong>
-          <span>{{ event.address }}</span>
-        </div>
-
-        <div class="detail-row" *ngIf="event.city">
-          <strong>Location:</strong>
-          <span>{{ event.city }}{{ event.country ? ', ' + event.country : '' }}</span>
-        </div>
-
-        <div class="detail-row">
-          <strong>Start Date:</strong>
-          <span>{{ formatDate(event.event_date) }}</span>
-        </div>
-
-        <div class="detail-row" *ngIf="event.event_end_date">
-          <strong>End Date:</strong>
-          <span>{{ formatDate(event.event_end_date) }}</span>
-        </div>
-
-        <div class="detail-row" *ngIf="event.category">
-          <strong>Category:</strong>
-          <span>{{ event.category }}</span>
-        </div>
-
-        <div class="ticket-stats-section">
-          <h3>Ticket Sales</h3>
-
-          <div class="stats-summary">
-            <div class="stat-box">
-              <span class="stat-label">Total Sold</span>
-              <span class="stat-value">{{ getTotalSold() }}</span>
+        <div *ngIf="!isLoading && event" class="event-details">
+            <div class="detail-row">
+                <strong>Title:</strong>
+                <span>{{ event.title }}</span>
             </div>
-            <div class="stat-box">
-              <span class="stat-label">Total Revenue</span>
-              <span class="stat-value">${{ getTotalRevenue().toFixed(2) }}</span>
+
+            <div class="detail-row" *ngIf="event.description">
+                <strong>Description:</strong>
+                <span>{{ event.description }}</span>
             </div>
-          </div>
 
-          <table class="ticket-table">
-            <thead>
-              <tr>
-                <th>Ticket Type</th>
-                <th>Price</th>
-                <th>Sold</th>
-                <th>Available</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ticket of ticketStats">
-                <td>{{ ticket.name }}</td>
-                <td>${{ ticket.price.toFixed(2) }}</td>
-                <td>{{ ticket.quantity_sold }}</td>
-                <td>{{ ticket.quantity_available }}</td>
-                <td>{{ ticket.quantity_total }}</td>
-              </tr>
-            </tbody>
-          </table>
+            <div class="detail-row">
+                <strong>Venue:</strong>
+                <span>{{ event.venue }}</span>
+            </div>
+
+            <div class="detail-row" *ngIf="event.address">
+                <strong>Address:</strong>
+                <span>{{ event.address }}</span>
+            </div>
+
+            <div class="detail-row" *ngIf="event.city">
+                <strong>Location:</strong>
+                <span>{{ event.city }}{{ event.country ? ', ' + event.country : '' }}</span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Start Date:</strong>
+                <span>{{ formatDate(event.event_date) }}</span>
+            </div>
+
+            <div class="detail-row" *ngIf="event.event_end_date">
+                <strong>End Date:</strong>
+                <span>{{ formatDate(event.event_end_date) }}</span>
+            </div>
+
+            <div class="detail-row" *ngIf="event.category">
+                <strong>Category:</strong>
+                <span>{{ event.category }}</span>
+            </div>
+
+            <div class="ticket-stats-section">
+                <h3>Ticket Sales</h3>
+
+                <div class="stats-summary">
+                    <div class="stat-box">
+                        <span class="stat-label">Total Sold</span>
+                        <span class="stat-value">{{ getTotalSold() }}</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Total Revenue</span>
+                        <span class="stat-value">${{ getTotalRevenue().toFixed(2) }}</span>
+                    </div>
+                </div>
+
+                <table class="ticket-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket Type</th>
+                            <th>Price</th>
+                            <th>Sold</th>
+                            <th>Available</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ticket of ticketStats">
+                            <td>{{ ticket.name }}</td>
+                            <td>${{ ticket.price.toFixed(2) }}</td>
+                            <td>{{ ticket.quantity_sold }}</td>
+                            <td>{{ ticket.quantity_available }}</td>
+                            <td>{{ ticket.quantity_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
 
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
+        <div class="official-checkbox">
+            <label>
+                <input type="checkbox" [(ngModel)]="event.is_official" (change)="toggleOfficial()" />
+                Official
+            </label>
+        </div>
+
+
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
     </div>
-  </div>
 </div>

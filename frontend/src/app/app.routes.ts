@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home';
 import { MarketplaceComponent } from "./components/marketplace";
 import { AboutComponent } from "./components/aboutus";
 import { ProfileComponent } from './components/profile';
+import { AdminComponent } from './components/adminpage'; 
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -13,4 +14,5 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'tickets', component: MarketplaceComponent },
     { path: 'about', component: AboutComponent },
+    { path: 'admin', component: AdminComponent }, 
     { path: '**', redirectTo: '' }];

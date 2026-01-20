@@ -1,0 +1,58 @@
+﻿<div class="admin-container">
+
+
+    <!-- Sidebar -->
+    <aside class="sidebar" [class.open]="sidebarOpen">
+        <div class="sidebar-logo">
+            <a routerLink="/" class="logo-link">TicketMarket</a>
+        </div>
+
+        <h2>Admin Panel</h2>
+
+        <nav>
+            <ul>
+                <li *ngFor="let item of menuItems; let i = index">
+                    <button (click)="selectMenu(i)" [class.active]="i === selectedIndex">{{ item.title }}</button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content" [class.shift]="sidebarOpen">
+        <h3>{{ menuItems[selectedIndex].title }}</h3>
+        <p>{{ menuItems[selectedIndex].content }}</p>
+
+        <!-- Manage Users -->
+        <div *ngIf="menuItems[selectedIndex].title === 'Manage Users'">
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td><button (click)="editUser(user)">Edit</button></td>
+                </tr>
+            </table>
+
+            <div *ngIf="selectedUser" class="edit-user">
+                <h4>Editing: {{ selectedUser.username }}</h4>
+                <input [(ngModel)]="selectedUser.first_name" placeholder="First Name" />
+                <input [(ngModel)]="selectedUser.last_name" placeholder="Last Name" />
+                <select [(ngModel)]="selectedUser.role">
+                    <option value="admin">Admin</option>
+                    <option value="creator">Creator</option>
+                    <option value="buyer">Buyer</option>
+                </select>
+                <input [(ngModel)]="newPassword" type="password" placeholder="New Password" />
+                <button (click)="saveUser()">Save</button>
+                <button (click)="cancelEdit()">Cancel</button>
+            </div>
+        </div>
+    </main>
+</div>

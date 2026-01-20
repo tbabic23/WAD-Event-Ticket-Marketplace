@@ -10,6 +10,17 @@
   align-items: center;
   z-index: 3000;
 }
+.official-checkbox {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+
 
 .modal-content-full {
   background: white;

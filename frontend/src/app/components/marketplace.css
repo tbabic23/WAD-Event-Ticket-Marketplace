@@ -101,9 +101,10 @@ body {
 
 .card {
 	background: white;
-	border-radius: 12px;
+	border-radius: 15px;
 	overflow: hidden;
-	box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+	box-shadow: 1px -1px 59px -31px rgba(0,0,0,0.4);
+	animation: popIn 0.45s ease-out both;
 }
 
 	.card h3 {
@@ -125,9 +126,9 @@ body {
 	}
 
 	.card button {
-		width: calc(100% - 30px);
-		margin: 0 15px 20px;
-		padding: 10px;
+		width: 100%;
+		margin: 0 auto;
+		padding: 15px;
 		border: none;
 		background: #3c5adc;
 		color: white;
@@ -136,7 +137,7 @@ body {
 	}
 
 		.card button:hover {
-			background: #345B1A;
+			background: #1e40af;
 		}
 
 
@@ -229,6 +230,34 @@ body {
 	.logo-link:hover {
 		color: #666;
 	}
+
+@keyframes popIn {
+	0% {
+		opacity: 0;
+		transform: scale(0.9) translateY(20px);
+	}
+
+	60% {
+		opacity: 1;
+		transform: scale(1.03) translateY(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+/* Sidebar slide-in animation */
+.sidebar {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* Add a class to show the sidebar */
+.sidebar.open {
+  transform: translateX(0);
+  opacity: 1;
+}
 
 @media (max-width: 900px) {
 	.sidebar {

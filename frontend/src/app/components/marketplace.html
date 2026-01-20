@@ -1,36 +1,36 @@
-﻿<aside class="sidebar">
-    <div>
-        <h1>
-            <a routerLink="/" class="logo-link">TicketMarket</a>
-        </h1>
-        <h2>Sort & Filter</h2>
-        <div class="filter-group">
-            <label>Price</label>
-            <select>
-                <option value="">Any</option>
-                <option value="low-high">Low → High</option>
-                <option value="high-low">High → Low</option>
-            </select>
-        </div>
+﻿<aside class="sidebar" [class.open]="true">
+    <!-- Clickable logo -->
+    <div class="sidebar-logo">
+        <h1><a routerLink="/" class="logo-link">TicketMarket</a></h1>
+    </div>
 
-        <div class="filter-group">
-            <label>Date</label>
-            <select>
-                <option value="">Any</option>
-                <option value="soon">Soonest</option>
-                <option value="latest">Latest</option>
-            </select>
-        </div>
+    <h2>Sort & Filter</h2>
+    <div class="filter-group">
+        <label>Price</label>
+        <select>
+            <option value="">Any</option>
+            <option value="low-high">Low → High</option>
+            <option value="high-low">High → Low</option>
+        </select>
+    </div>
 
-        <div class="filter-group">
-            <label>Location</label>
-            <select>
-                <option value="">All</option>
-                <option value="la">LA</option>
-                <option value="ny">NY</option>
-                <option value="london">London</option>
-            </select>
-        </div>
+    <div class="filter-group">
+        <label>Date</label>
+        <select>
+            <option value="">Any</option>
+            <option value="soon">Soonest</option>
+            <option value="latest">Latest</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label>Location</label>
+        <select>
+            <option value="">All</option>
+            <option value="la">LA</option>
+            <option value="ny">NY</option>
+            <option value="london">London</option>
+        </select>
     </div>
 
     <div class="sidebar-bottom">
@@ -39,7 +39,6 @@
         </button>
     </div>
 </aside>
-
 
 <main class="container content">
     <section class="marketplace">
@@ -59,15 +58,13 @@
         </div>
     </section>
 
-    <app-event-modal
-        *ngIf="showModal"
-        (close)="closeModal()"
-        (eventCreated)="onEventCreated()">
+    <app-event-modal *ngIf="showModal"
+                     (close)="closeModal()"
+                     (eventCreated)="onEventCreated()">
     </app-event-modal>
 
-    <app-manage-event-modal
-        *ngIf="showManageModal && selectedEventId"
-        [eventId]="selectedEventId"
-        (close)="closeManageModal()">
+    <app-manage-event-modal *ngIf="showManageModal && selectedEventId"
+                            [eventId]="selectedEventId"
+                            (close)="closeManageModal()">
     </app-manage-event-modal>
 </main>
