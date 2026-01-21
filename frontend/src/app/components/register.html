@@ -1,0 +1,41 @@
+<main class="register-container">
+    <div class="register-box">
+        <h1>Create Account</h1>
+        <p>Join TicketMarket today</p>
+
+        <form (ngSubmit)="register()">
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input [(ngModel)]="firstName" name="firstName" type="text" placeholder="John" [disabled]="isLoading">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input [(ngModel)]="lastName" name="lastName" type="text" placeholder="Doe" [disabled]="isLoading">
+                </div>
+            </div>
+
+            <label>Username <span class="required">*</span></label>
+            <input [(ngModel)]="username" name="username" type="text" placeholder="Choose a username" [disabled]="isLoading">
+
+            <label>Email <span class="required">*</span></label>
+            <input [(ngModel)]="email" name="email" type="email" placeholder="your@email.com" [disabled]="isLoading">
+
+            <label>Password <span class="required">*</span></label>
+            <input [(ngModel)]="password" name="password" type="password" placeholder="At least 6 characters" [disabled]="isLoading">
+
+            <label>Confirm Password <span class="required">*</span></label>
+            <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm your password" [disabled]="isLoading">
+
+            <button type="submit" [disabled]="isLoading">{{ isLoading ? 'Creating account...' : 'Create Account' }}</button>
+        </form>
+
+        <div class="extra">
+            <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+        </div>
+    </div>
+</main>

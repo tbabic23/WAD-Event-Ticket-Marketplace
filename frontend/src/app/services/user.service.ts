@@ -16,7 +16,7 @@ export interface User {
 })
 export class UserService {
 
-    private apiUrl = 'http://localhost:12150/api/user';
+    private apiUrl = 'http://spider.foi.hr:12150/api/user';
 
     constructor(private http: HttpClient) { }
 

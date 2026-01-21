@@ -1,0 +1,116 @@
+<div class="home-page">
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge" *ngIf="user">
+        <span class="badge-icon">👋</span>
+        <span>Welcome back!</span>
+      </div>
+      <h1 class="hero-title" *ngIf="user">
+        Hello, <span class="highlight">{{ user.first_name || user.username }}</span>!
+      </h1>
+      <h1 class="hero-title" *ngIf="!user">
+        Discover Amazing <span class="highlight">Events</span>
+      </h1>
+      <p class="hero-subtitle" *ngIf="user">
+        Ready to explore? Find your next unforgettable experience.
+      </p>
+      <p class="hero-subtitle" *ngIf="!user">
+        Your gateway to concerts, festivals, sports, and more. Get your tickets now!
+      </p>
+    </div>
+  </section>
+
+  <section class="quick-actions">
+    <a routerLink="/tickets" class="action-card primary">
+      <div class="action-icon">🎫</div>
+      <div class="action-content">
+        <h3>Browse Events</h3>
+        <p>Explore upcoming concerts, sports, and more</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+
+    <a *ngIf="user" routerLink="/profile" class="action-card">
+      <div class="action-icon">👤</div>
+      <div class="action-content">
+        <h3>My Profile</h3>
+        <p>View your tickets and manage your account</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+
+    <a *ngIf="!user" routerLink="/login" class="action-card">
+      <div class="action-icon">🔐</div>
+      <div class="action-content">
+        <h3>Sign In</h3>
+        <p>Access your account and tickets</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+
+    <a *ngIf="!user" routerLink="/register" class="action-card">
+      <div class="action-icon">✨</div>
+      <div class="action-content">
+        <h3>Create Account</h3>
+        <p>Join us and start buying tickets</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+
+    <a *ngIf="user && isCreatorOrAdmin" routerLink="/tickets" class="action-card">
+      <div class="action-icon">📅</div>
+      <div class="action-content">
+        <h3>Create Event</h3>
+        <p>Host your own event and sell tickets</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+
+    <a routerLink="/about" class="action-card">
+      <div class="action-icon">ℹ️</div>
+      <div class="action-content">
+        <h3>About Us</h3>
+        <p>Learn more about TicketMarket</p>
+      </div>
+      <span class="action-arrow">→</span>
+    </a>
+  </section>
+
+  <section class="features-section" *ngIf="!user">
+    <h2 class="section-title">Why Choose TicketMarket?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Secure Transactions</h3>
+        <p>Your payments are protected with industry-standard encryption</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Digital Tickets</h3>
+        <p>Get instant QR code tickets delivered to your account</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎉</div>
+        <h3>Exclusive Events</h3>
+        <p>Access to the hottest events in your area</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="user-stats" *ngIf="user">
+    <div class="stat-card">
+      <span class="stat-icon">🎫</span>
+      <div class="stat-info">
+        <span class="stat-label">Your Role</span>
+        <span class="stat-value role">{{ user.role }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">📧</span>
+      <div class="stat-info">
+        <span class="stat-label">Email</span>
+        <span class="stat-value">{{ user.email }}</span>
+      </div>
+    </div>
+  </section>
+</div>

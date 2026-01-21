@@ -23,6 +23,39 @@
         <h3>{{ menuItems[selectedIndex].title }}</h3>
         <p>{{ menuItems[selectedIndex].content }}</p>
 
+        <!-- Manage Events -->
+        <div *ngIf="menuItems[selectedIndex].title === 'Manage Events'">
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th>Creator</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let event of allEvents">
+                    <td>{{ event.title }}</td>
+                    <td>{{ formatDate(event.event_date) }}</td>
+                    <td>{{ event.venue }}{{ event.city ? ', ' + event.city : '' }}</td>
+                    <td>{{ event.creator_username }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="event.confirmed ? 'status-valid' : 'status-pending'">
+                            {{ event.confirmed ? 'Confirmed' : 'Pending' }}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <button class="edit-btn" (click)="openEditEvent(event.id)">Edit</button>
+                        <button class="delete-btn" (click)="deleteEvent(event)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+
+            <div *ngIf="allEvents.length === 0" class="empty-state">
+                <p>No events found</p>
+            </div>
+        </div>
+
         <!-- Manage Users -->
         <div *ngIf="menuItems[selectedIndex].title === 'Manage Users'">
             <table>
@@ -35,24 +68,152 @@
                 <tr *ngFor="let user of users">
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
-                    <td><button (click)="editUser(user)">Edit</button></td>
+                    <td>
+                        <span class="role-badge" [ngClass]="'role-' + user.role">
+                            {{ user.role }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="edit-btn" (click)="editUser(user)">Edit</button>
+                    </td>
                 </tr>
             </table>
 
-            <div *ngIf="selectedUser" class="edit-user">
-                <h4>Editing: {{ selectedUser.username }}</h4>
-                <input [(ngModel)]="selectedUser.first_name" placeholder="First Name" />
-                <input [(ngModel)]="selectedUser.last_name" placeholder="Last Name" />
-                <select [(ngModel)]="selectedUser.role">
-                    <option value="admin">Admin</option>
-                    <option value="creator">Creator</option>
-                    <option value="buyer">Buyer</option>
+            <div *ngIf="selectedUser" class="edit-user-modal">
+                <div class="edit-user-content">
+                    <div class="edit-user-header">
+                        <h4>Edit User: {{ selectedUser.username }}</h4>
+                        <button class="close-btn" (click)="cancelEdit()">×</button>
+                    </div>
+                    
+                    <div class="edit-user-body">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input [(ngModel)]="selectedUser.first_name" placeholder="First Name" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input [(ngModel)]="selectedUser.last_name" placeholder="Last Name" />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Role</label>
+                            <div class="role-selector">
+                                <button 
+                                    type="button"
+                                    class="role-option"
+                                    [class.selected]="selectedUser.role === 'buyer'"
+                                    (click)="selectedUser.role = 'buyer'">
+                                    <span class="role-icon">👤</span>
+                                    <span class="role-name">Buyer</span>
+                                    <span class="role-desc">Can purchase tickets</span>
+                                </button>
+                                <button 
+                                    type="button"
+                                    class="role-option"
+                                    [class.selected]="selectedUser.role === 'creator'"
+                                    (click)="selectedUser.role = 'creator'">
+                                    <span class="role-icon">📅</span>
+                                    <span class="role-name">Creator</span>
+                                    <span class="role-desc">Can create events</span>
+                                </button>
+                                <button 
+                                    type="button"
+                                    class="role-option"
+                                    [class.selected]="selectedUser.role === 'admin'"
+                                    (click)="selectedUser.role = 'admin'">
+                                    <span class="role-icon">👑</span>
+                                    <span class="role-name">Admin</span>
+                                    <span class="role-desc">Full access</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>New Password (optional)</label>
+                            <input [(ngModel)]="newPassword" type="password" placeholder="Leave blank to keep current" />
+                        </div>
+                    </div>
+                    
+                    <div class="edit-user-footer">
+                        <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                        <button class="save-btn" (click)="saveUser()">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Tickets -->
+        <div *ngIf="menuItems[selectedIndex].title === 'Manage Tickets'">
+            <div class="tickets-filters">
+                <input
+                    type="text"
+                    [(ngModel)]="searchQuery"
+                    (input)="filterTickets()"
+                    placeholder="Search by code, user, or event..."
+                    class="filter-input">
+
+                <select [(ngModel)]="selectedEventFilter" (change)="filterTickets()" class="filter-select">
+                    <option value="">All Events</option>
+                    <option *ngFor="let event of getUniqueEvents()" [value]="event">{{ event }}</option>
                 </select>
-                <input [(ngModel)]="newPassword" type="password" placeholder="New Password" />
-                <button (click)="saveUser()">Save</button>
-                <button (click)="cancelEdit()">Cancel</button>
+
+                <select [(ngModel)]="selectedStatusFilter" (change)="filterTickets()" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="valid">Valid</option>
+                    <option value="used">Used</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="refunded">Refunded</option>
+                </select>
+            </div>
+
+            <div *ngIf="showScanResult" class="scan-result-admin" [ngClass]="scanResult.success ? 'success' : 'error'">
+                <strong>{{ scanResult.message }}</strong>
+            </div>
+
+            <table class="tickets-table">
+                <tr>
+                    <th>Ticket Code</th>
+                    <th>Event</th>
+                    <th>Type</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                <tr *ngFor="let ticket of filteredTickets">
+                    <td class="code-cell">{{ ticket.ticket_code }}</td>
+                    <td>{{ ticket.event_title }}</td>
+                    <td>{{ ticket.ticket_type_name }}</td>
+                    <td>{{ ticket.username }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="'status-' + ticket.status">
+                            {{ ticket.status }}
+                        </span>
+                    </td>
+                    <td>${{ ticket.price.toFixed(2) }}</td>
+                    <td>{{ formatDate(ticket.created_at) }}</td>
+                    <td>
+                        <button
+                            class="use-btn-small"
+                            (click)="useTicketAdmin(ticket)"
+                            [disabled]="ticket.status !== 'valid'">
+                            Use
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+            <div *ngIf="filteredTickets.length === 0" class="empty-state">
+                <p>No tickets found</p>
             </div>
         </div>
     </main>
+
+    <app-manage-event-modal *ngIf="showManageModal && selectedEventId"
+                            [eventId]="selectedEventId"
+                            (close)="closeManageModal()">
+    </app-manage-event-modal>
 </div>

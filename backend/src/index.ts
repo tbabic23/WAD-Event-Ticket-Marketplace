@@ -4,6 +4,7 @@ import { router as testRouter } from './routes/test';
 import { router as authRouter } from './routes/auth';
 import { router as adminPanelRouter } from './routes/user';
 import { router as eventsRouter } from './routes/events';
+import { router as ticketsRouter } from './routes/tickets';
 import cors from 'cors';
 import path from 'path';
 
@@ -16,12 +17,12 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', testRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/user', adminPanelRouter); 
+app.use('/api/user', adminPanelRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/tickets', ticketsRouter);
 
 app.use(express.static(path.join(__dirname, '../../frontend/dist/frontend/browser')));
 
-// Catch-all handler: send back index.html for any non-API routes (for SPA routing)
 app.use((req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();

@@ -1,69 +1,79 @@
-/* Full admin page layout */
 .admin-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    background-color: #f5f7fa;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
-/* Navbar */
 .navbar {
-    height: 60px;
-    background: linear-gradient(90deg, #2563eb, #70a1ff);
+    height: 64px;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
-    color: #fff;
-    position: relative;
-    z-index: 1001; /* above overlay */
+    padding: 0 24px;
+    color: #1f2937;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border-bottom: 1px solid #e5e7eb;
 }
 
     .navbar .logo-link {
-        font-size: 24px;
-        font-weight: bold;
-        color: white;
+        font-size: 22px;
+        font-weight: 800;
         text-decoration: none;
         cursor: pointer;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .navbar .toggle-btn {
         font-size: 24px;
         cursor: pointer;
         user-select: none;
-        display: none; /* hidden on desktop */
+        display: none;
+        color: #667eea;
     }
 
-/* Sidebar overlay */
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 64px;
     left: 0px;
     width: 260px;
-    height: 100%;
-    background-color: #2c2d32;
-    padding: 20px;
+    height: calc(100% - 64px);
+    background: white;
+    padding: 24px 16px;
     box-sizing: border-box;
     flex-direction: column;
     display: flex;
     z-index: 1000;
     overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.04);
 }
 
     .sidebar.open {
-        left: 0; /* slide in */
+        left: 0;
     }
 
     .sidebar h2 {
-        color: #fff;
-        margin-bottom: 20px;
-        font-size: 25   px;
-        text-align: center;
+        color: #1f2937;
+        margin-bottom: 24px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        padding: 0 12px;
         user-select: none;
     }
 
-    /* Sidebar menu buttons */
     .sidebar nav ul {
         list-style: none;
         padding: 0;
@@ -72,36 +82,35 @@
     }
 
         .sidebar nav ul li {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
             .sidebar nav ul li button {
                 width: 100%;
-                padding: 12px 15px;
-                font-size: 16px;
-                font-weight: 600;
-                color: #fff;
-                background: #1e40af;
+                padding: 14px 16px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #4b5563;
+                background: transparent;
                 border: none;
-                border-radius: 8px;
+                border-radius: 10px;
                 cursor: pointer;
                 text-align: left;
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+                gap: 12px;
                 transition: all 0.2s ease;
             }
 
                 .sidebar nav ul li button:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
-                    background: linear-gradient(90deg, #1e40af, #60a5fa);
+                    background: #f3f4f6;
+                    color: #667eea;
                 }
 
                 .sidebar nav ul li button.active {
-                    background: #0D0073;
-                    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
                 }
 
 
@@ -111,46 +120,548 @@
 }
 
     .sidebar-logo .logo-link {
-        font-size: 32px;
-        font-weight: bold;
-        color: white;
+        font-size: 24px;
+        font-weight: 800;
         text-decoration: none;
         display: block;
         padding: 10px 0;
-        transition: color 0.2s ease;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: transform 0.2s ease;
     }
 
         .sidebar-logo .logo-link:hover {
-            color: #2563eb;
+            transform: scale(1.02);
         }
 
-/* Content area */
 .content {
     flex: 1;
-    padding: 80px 30px 30px; /* top padding for navbar */
+    padding: 100px 40px 40px;
     transition: margin-left 0.3s ease;
     margin-left: 0;
 }
 
     .content.shift {
-        margin-left: 260px; /* when sidebar is open */
+        margin-left: 260px;
     }
 
     .content h3 {
         margin-top: 0;
-        font-size: 28px;
-        color: #2563eb;
+        font-size: 26px;
+        color: #1f2937;
+        font-weight: 700;
+        margin-bottom: 8px;
     }
 
     .content p {
-        font-size: 16px;
-        color: #2f3542;
+        font-size: 15px;
+        color: #6b7280;
         line-height: 1.6;
+        margin-bottom: 32px;
     }
 
-/* Mobile toggle button */
+.tickets-filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    flex: 2;
+    min-width: 250px;
+    padding: 14px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.filter-select {
+    flex: 1;
+    min-width: 150px;
+    padding: 14px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.scan-result-admin {
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    text-align: center;
+    animation: slideDown 0.3s ease-out;
+    font-weight: 500;
+}
+
+.scan-result-admin.success {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border: 1px solid #10b981;
+    color: #065f46;
+}
+
+.scan-result-admin.error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.tickets-table th {
+    background: #f9fafb;
+    padding: 16px 18px;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tickets-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.tickets-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.tickets-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.code-cell {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 12px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.3px;
+}
+
+.status-valid {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.status-used {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+}
+
+.status-cancelled {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.status-refunded {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.use-btn-small {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.use-btn-small:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.use-btn-small:disabled {
+    background: #e5e7eb;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.empty-state p {
+    color: #9ca3af;
+    font-size: 16px;
+    margin: 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media (max-width: 900px) {
     .navbar .toggle-btn {
         display: block;
+    }
+
+    .tickets-filters {
+        flex-direction: column;
+    }
+
+    .tickets-table {
+        font-size: 12px;
+    }
+
+    .tickets-table th,
+    .tickets-table td {
+        padding: 12px 10px;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+table th {
+    background: #f9fafb;
+    padding: 16px 18px;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #1f2937;
+    font-size: 14px;
+}
+
+table tbody tr {
+    transition: background 0.2s ease;
+}
+
+table tbody tr:hover {
+    background: #f9fafb;
+}
+
+.role-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.3px;
+}
+
+.role-admin {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.role-creator {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.role-buyer {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+}
+
+.edit-btn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.delete-btn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.status-pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.edit-user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.edit-user-content {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+.edit-user-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.edit-user-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.edit-user-body {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.role-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.role-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.role-option:hover {
+    border-color: #667eea;
+    background: #f5f3ff;
+}
+
+.role-option.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.role-option .role-icon {
+    font-size: 24px;
+}
+
+.role-option .role-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.role-option .role-desc {
+    font-size: 12px;
+    color: #6b7280;
+    margin-left: auto;
+}
+
+.edit-user-footer {
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    justify-content: flex-end;
+}
+
+.cancel-btn {
+    padding: 12px 24px;
+    background: #f3f4f6;
+    color: #4b5563;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background: #e5e7eb;
+}
+
+.save-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

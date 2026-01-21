@@ -1,0 +1,92 @@
+<div class="modal-overlay" (click)="close.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div *ngIf="showSuccess" class="success-popup">
+      <div class="success-icon">✓</div>
+      <h3>Purchase Successful!</h3>
+      <p>You can check your tickets in your profile</p>
+    </div>
+
+    <div *ngIf="!showSuccess">
+      <div class="modal-header">
+        <h2 *ngIf="step === 1">Buy Tickets for {{ event?.title }}</h2>
+        <h2 *ngIf="step === 2">Payment Details</h2>
+        <button class="close-btn" (click)="close.emit()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngIf="isLoading" class="loading">Loading...</div>
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+      <!-- Step 1: Select Tickets -->
+      <div *ngIf="step === 1 && !isLoading">
+        <h3>Select Ticket Type</h3>
+        <div class="ticket-types">
+          <div *ngFor="let type of ticketTypes"
+               class="ticket-type"
+               [class.selected]="selectedTicketType?.id === type.id"
+               (click)="selectTicketType(type)">
+            <h4>{{ type.name }}</h4>
+            <p>{{ type.description }}</p>
+            <p class="price">${{ type.price }}</p>
+            <p class="availability">{{ type.quantity_available - type.quantity_sold }} available</p>
+          </div>
+        </div>
+
+        <div *ngIf="selectedTicketType" class="quantity-section">
+          <label>Quantity:</label>
+          <input type="number" [(ngModel)]="quantity" min="1" [max]="selectedTicketType.quantity_available - selectedTicketType.quantity_sold">
+          <p>Total: ${{ getTotalPrice() }}</p>
+        </div>
+
+        <button class="next-btn" (click)="nextStep()">Next</button>
+      </div>
+
+      <!-- Step 2: Payment -->
+      <div *ngIf="step === 2">
+        <h3>Payment Information</h3>
+        <div class="payment-form">
+          <div class="form-group">
+            <label>Cardholder Name:</label>
+            <input type="text" [(ngModel)]="cardholderName" placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label>Card Number:</label>
+            <input type="text" [(ngModel)]="cardNumber" placeholder="1234 5678 9012 3456">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiry Month:</label>
+              <select [(ngModel)]="expiryMonth">
+                <option value="">MM</option>
+                <option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month">{{ month }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Expiry Year:</label>
+              <select [(ngModel)]="expiryYear">
+                <option value="">YYYY</option>
+                <option *ngFor="let year of [2024,2025,2026,2027,2028]" [value]="year">{{ year }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>CVV:</label>
+              <input type="text" [(ngModel)]="cvv" placeholder="123">
+            </div>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <p>Total: ${{ getTotalPrice() }}</p>
+        </div>
+
+        <div class="button-group">
+          <button class="back-btn" (click)="previousStep()">Back</button>
+          <button class="purchase-btn" (click)="finishPurchase()" [disabled]="isLoading">
+            {{ isLoading ? 'Processing...' : 'Finish Purchase' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

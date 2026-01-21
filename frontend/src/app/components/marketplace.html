@@ -4,33 +4,50 @@
         <h1><a routerLink="/" class="logo-link">TicketMarket</a></h1>
     </div>
 
-    <h2>Sort & Filter</h2>
+    <h2>Search & Filter</h2>
     <div class="filter-group">
-        <label>Price</label>
-        <select>
-            <option value="">Any</option>
-            <option value="low-high">Low → High</option>
-            <option value="high-low">High → Low</option>
+        <label>Search by Name</label>
+        <input type="text" [(ngModel)]="search" (input)="onFilterChange()" placeholder="Event name...">
+    </div>
+
+    <div class="filter-group">
+        <label>Location</label>
+        <select [(ngModel)]="selectedLocation" (change)="onFilterChange()">
+            <option value="">All Locations</option>
+            <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
         </select>
     </div>
 
     <div class="filter-group">
-        <label>Date</label>
-        <select>
-            <option value="">Any</option>
-            <option value="soon">Soonest</option>
+        <label>Start Date From</label>
+        <input type="date" [(ngModel)]="selectedDate" (change)="onFilterChange()">
+    </div>
+
+    <div class="filter-group">
+        <label>Start Date Until</label>
+        <input type="date" [(ngModel)]="selectedDateUntil" (change)="onFilterChange()">
+    </div>
+
+    <div class="filter-group">
+        <label>Category</label>
+        <select [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label>Sort by Date</label>
+        <select [(ngModel)]="sortBy" (change)="onFilterChange()">
+            <option value="soonest">Soonest</option>
             <option value="latest">Latest</option>
         </select>
     </div>
 
     <div class="filter-group">
-        <label>Location</label>
-        <select>
-            <option value="">All</option>
-            <option value="la">LA</option>
-            <option value="ny">NY</option>
-            <option value="london">London</option>
-        </select>
+        <label>
+            <input type="checkbox" [(ngModel)]="confirmedOnly" (change)="onFilterChange()"> Confirmed Events Only
+        </label>
     </div>
 
     <div class="sidebar-bottom">
@@ -46,13 +63,16 @@
             <div class="image-placeholder" [style.background-image]="event.image_url ? 'url(' + event.image_url + ')' : ''">
                 <span *ngIf="!event.image_url">Sample Image</span>
             </div>
-            <h3>{{ event.title }}</h3>
+            <div class="card-title-row">
+                <h3>{{ event.title }}</h3>
+                <span class="confirmed-badge" *ngIf="event.confirmed">Confirmed</span>
+            </div>
             <p class="event-date">{{ formatEventDate(event.event_date, event.event_end_date) }}</p>
             <p class="venue">{{ event.venue }}{{ event.city ? ' • ' + event.city : '' }}</p>
 
-            <button *ngIf="!isEventCreator(event)" (click)="buyTicket(event)">Buy Ticket</button>
+            <button *ngIf="!isEventCreator(event) && !isAdmin()" (click)="buyTicket(event)">Buy Ticket</button>
 
-            <div *ngIf="isEventCreator(event)" class="creator-actions">
+            <div *ngIf="isEventCreator(event) || isAdmin()" class="creator-actions">
                 <button class="manage-btn" (click)="openManageModal(event.id)">Manage Event</button>
             </div>
         </div>
@@ -67,4 +87,11 @@
                             [eventId]="selectedEventId"
                             (close)="closeManageModal()">
     </app-manage-event-modal>
+
+    <app-buy-ticket-modal *ngIf="showBuyModal && selectedEvent"
+                          [event]="selectedEvent"
+                          (close)="closeBuyModal()"
+                          (purchaseComplete)="onPurchaseComplete()">
+    </app-buy-ticket-modal>
+
 </main>

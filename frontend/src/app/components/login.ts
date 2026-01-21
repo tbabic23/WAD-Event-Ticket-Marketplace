@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -34,7 +34,7 @@ export class LoginComponent {
 
     this.isLoading = true;
 
-    this.http.post<any>('http://localhost:12150/api/auth/login', {
+    this.http.post<any>('http://spider.foi.hr:12150/api/auth/login', {
       username: this.username,
       password: this.password
     }).subscribe({

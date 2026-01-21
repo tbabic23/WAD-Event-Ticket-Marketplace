@@ -11,10 +11,8 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit{
   username: string | null = null;
 
-  
   ngOnInit() {
     this.username = localStorage.getItem('username');
-    console.log(localStorage.getItem('username'));
   }
   protected readonly title = signal('frontend');
 }

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
-// src/middleware/users.ts
 const express_1 = require("express");
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const path_1 = __importDefault(require("path"));
@@ -13,7 +12,6 @@ const router = (0, express_1.Router)();
 exports.router = router;
 const dbPath = path_1.default.join(__dirname, '..', 'db', 'mydb.sdb');
 const db = new sqlite3_1.default.Database(dbPath);
-// GET all users
 router.get('/', (req, res) => {
     db.all('SELECT id, username, email, role, first_name, last_name FROM users ORDER BY id DESC', [], (err, rows) => {
         if (err)
@@ -21,7 +19,6 @@ router.get('/', (req, res) => {
         res.json(rows);
     });
 });
-// GET single user
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     db.get('SELECT id, username, email, role, first_name, last_name FROM users WHERE id = ?', [id], (err, row) => {
@@ -32,7 +29,6 @@ router.get('/:id', (req, res) => {
         res.json(row);
     });
 });
-// UPDATE user info
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { first_name, last_name, role } = req.body;
@@ -44,7 +40,6 @@ router.put('/:id', (req, res) => {
         res.json({ message: 'User updated successfully' });
     });
 });
-// UPDATE password
 router.put('/:id/password', async (req, res) => {
     const { id } = req.params;
     const { password } = req.body;
@@ -59,7 +54,6 @@ router.put('/:id/password', async (req, res) => {
         res.json({ message: 'Password updated successfully' });
     });
 });
-// DELETE user
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     db.run('DELETE FROM users WHERE id = ?', [id], function (err) {

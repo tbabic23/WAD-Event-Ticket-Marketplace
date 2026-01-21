@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS events (
     category VARCHAR(100),
     image_url TEXT,
     status VARCHAR(20) DEFAULT 'active' CHECK(status IN ('draft', 'active', 'cancelled', 'completed')),
+    confirmed BOOLEAN DEFAULT FALSE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE

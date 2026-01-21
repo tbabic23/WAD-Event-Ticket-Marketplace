@@ -1,0 +1,85 @@
+<div class="scan-page">
+  <div class="scan-container">
+    <div *ngIf="isScanning" class="scanning-state">
+      <div class="spinner-wrapper">
+        <div class="spinner"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <h2>Scanning Ticket</h2>
+      <p class="scan-subtitle">Please wait while we verify your ticket...</p>
+      <div class="ticket-code">{{ ticketCode }}</div>
+    </div>
+
+    <div *ngIf="!isScanning && scanResult?.success" class="result-state success">
+      <div class="result-icon-wrapper">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="success-rings"></div>
+      </div>
+      <h2>Check-in Complete!</h2>
+      <p class="result-message">{{ scanResult.message }}</p>
+
+      <div class="ticket-info-card" *ngIf="scanResult.ticket">
+        <div class="info-row">
+          <span class="info-label">Ticket Code</span>
+          <span class="info-value mono">{{ scanResult.ticket.ticketCode }}</span>
+        </div>
+        <div class="info-row" *ngIf="scanResult.ticket.checkedInAt">
+          <span class="info-label">Check-in Time</span>
+          <span class="info-value">{{ formatTime(scanResult.ticket.checkedInAt) }}</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" (click)="goToMarketplace()">
+          <span class="btn-icon">🎫</span>
+          View Events
+        </button>
+        <button class="btn-secondary" (click)="goToProfile()">
+          <span class="btn-icon">👤</span>
+          My Profile
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!isScanning && !scanResult?.success" class="result-state error">
+      <div class="result-icon-wrapper">
+        <div class="result-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+      </div>
+      <h2>Scan Failed</h2>
+      <p class="result-message">{{ scanResult?.message || 'Invalid ticket' }}</p>
+
+      <div class="ticket-info-card error-card" *ngIf="scanResult?.ticket">
+        <div class="info-row">
+          <span class="info-label">Ticket Code</span>
+          <span class="info-value mono">{{ scanResult.ticket.ticketCode }}</span>
+        </div>
+        <div class="info-row" *ngIf="scanResult.ticket.status">
+          <span class="info-label">Status</span>
+          <span class="status-badge" [ngClass]="'status-' + scanResult.ticket.status">
+            {{ scanResult.ticket.status }}
+          </span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" (click)="goToMarketplace()">
+          <span class="btn-icon">🎫</span>
+          View Events
+        </button>
+        <button class="btn-secondary" (click)="goToProfile()">
+          <span class="btn-icon">👤</span>
+          My Profile
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

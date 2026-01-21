@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EventService {
-  private apiUrl = 'http://localhost:12150/api/events';
+  private apiUrl = 'http://spider.foi.hr:12150/api/events';
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +18,17 @@ export class EventService {
     });
   }
 
-  getAllEvents(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAllEvents(params?: any): Observable<any[]> {
+    let url = this.apiUrl;
+    if (params) {
+      const query = new URLSearchParams(params).toString();
+      url += `?${query}`;
+    }
+    return this.http.get<any[]>(url);
+  }
+
+  updateConfirmed(id: number, confirmed: boolean): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/confirmed`, { confirmed }, { headers: this.getHeaders() });
   }
 
   getEventById(id: number): Observable<any> {
@@ -42,5 +51,13 @@ export class EventService {
 
   getEventStats(id: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${id}/stats`);
+  }
+
+  getFilterOptions(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/filters`);
+  }
+
+  getMyEvents(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/my-events`, { headers: this.getHeaders() });
   }
 }

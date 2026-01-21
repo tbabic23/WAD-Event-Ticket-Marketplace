@@ -1,4 +1,3 @@
-// src/middleware/users.ts
 import { Router } from 'express';
 import sqlite3 from 'sqlite3';
 import path from 'path';
@@ -8,7 +7,6 @@ const router = Router();
 const dbPath = path.join(__dirname, '..', 'db', 'mydb.sdb');
 const db = new sqlite3.Database(dbPath);
 
-// GET all users
 router.get('/', (req, res) => {
     db.all(
         'SELECT id, username, email, role, first_name, last_name FROM users ORDER BY id DESC',
@@ -20,7 +18,6 @@ router.get('/', (req, res) => {
     );
 });
 
-// GET single user
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     db.get(
@@ -34,7 +31,6 @@ router.get('/:id', (req, res) => {
     );
 });
 
-// UPDATE user info
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { first_name, last_name, role } = req.body;
@@ -49,7 +45,6 @@ router.put('/:id', (req, res) => {
     );
 });
 
-// UPDATE password
 router.put('/:id/password', async (req, res) => {
     const { id } = req.params;
     const { password } = req.body;
@@ -68,7 +63,6 @@ router.put('/:id/password', async (req, res) => {
     );
 });
 
-// DELETE user
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     db.run('DELETE FROM users WHERE id = ?', [id], function (err) {

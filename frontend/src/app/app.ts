@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
   selector: 'app-root',
   imports: [RouterModule, CommonModule],
   templateUrl: './app.html',
-  styleUrls: ['./app.css'], // fixed typo: styleUrls
+  styleUrls: ['./app.css'],
 })
 export class App implements OnInit {
   isLoggedIn = false;
@@ -20,7 +20,6 @@ export class App implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Auth status
     this.authService.isAuthenticated$.subscribe((isAuth) => {
       this.isLoggedIn = isAuth;
       if (isAuth) {
@@ -32,11 +31,9 @@ export class App implements OnInit {
       }
     });
 
-    // Watch route changes
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        // Hide logo if on admin or marketplace page
         const currentUrl = event.urlAfterRedirects;
         this.hideLogo = currentUrl.startsWith('/admin') || currentUrl.startsWith('/tickets');
       });

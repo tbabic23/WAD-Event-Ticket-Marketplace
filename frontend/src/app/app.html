@@ -7,7 +7,6 @@
     <a routerLink="/tickets">Marketplace</a>
     <a routerLink="/about">About Us</a>
 
-    <!-- Admin Panel Link -->
     <a *ngIf="isAdmin" routerLink="/admin" class="register">Admin Panel</a>
 
     <ng-container *ngIf="!isLoggedIn">
