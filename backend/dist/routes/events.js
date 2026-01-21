@@ -37,20 +37,23 @@ router.get('/:id', (req, res) => {
     });
 });
 router.get('/:id/stats', (req, res) => {
-    const { id } = req.params;
+    const eventId = Number(req.params.id);
+    if (Number.isNaN(eventId)) {
+        return res.status(400).json({ error: 'Invalid event id' });
+    }
     db.all(`SELECT
       tt.id,
       tt.name,
       tt.price,
-      tt.quantity_total,
       tt.quantity_available,
-      (tt.quantity_total - tt.quantity_available) as quantity_sold
-    FROM ticket_types tt
-    WHERE tt.event_id = ?`, [id], (err, stats) => {
+      tt.quantity_sold
+     FROM ticket_types tt
+     WHERE tt.event_id = ?`, [eventId], (err, stats) => {
         if (err) {
-            return res.status(500).json({ error: 'Database error' });
+            console.error('STATS QUERY ERROR:', err);
+            return res.status(500).json({ error: err.message });
         }
-        res.json(stats);
+        res.json(stats ?? []);
     });
 });
 router.post('/', (req, res) => {
@@ -63,14 +66,17 @@ router.post('/', (req, res) => {
     }
     db.run('INSERT INTO events (creator_id, title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [creator_id, title, description, venue, address, city, country, event_date, event_end_date, category, image_url, 'active'], function (err) {
         if (err) {
-            return res.status(500).json({ error: 'Database error' });
+            console.error('Event creation error:', err);
+            return res.status(500).json({ error: 'Database error', details: err.message });
         }
         const eventId = this.lastID;
         const ticketPromises = ticket_types.map((ticket) => {
             return new Promise((resolve, reject) => {
-                db.run('INSERT INTO ticket_types (event_id, name, price, quantity_available, quantity_total) VALUES (?, ?, ?, ?, ?)', [eventId, ticket.name, ticket.price, ticket.quantity, ticket.quantity], (err) => {
-                    if (err)
+                db.run('INSERT INTO ticket_types (event_id, name, price, quantity_available, quantity_sold) VALUES (?, ?, ?, ?, ?)', [eventId, ticket.name, ticket.price, ticket.quantity, 0], (err) => {
+                    if (err) {
+                        console.error('Ticket type creation error:', err);
                         reject(err);
+                    }
                     else
                         resolve(true);
                 });
@@ -83,22 +89,38 @@ router.post('/', (req, res) => {
                 eventId: eventId
             });
         })
-            .catch(() => {
-            res.status(500).json({ error: 'Failed to create ticket types' });
+            .catch((err) => {
+            console.error('Ticket types promise error:', err);
+            res.status(500).json({ error: 'Failed to create ticket types', details: err.message });
         });
     });
 });
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const { title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status } = req.body;
-    db.run('UPDATE events SET title = ?, description = ?, venue = ?, address = ?, city = ?, country = ?, event_date = ?, event_end_date = ?, category = ?, image_url = ?, status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status, id], function (err) {
-        if (err) {
+    const { title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status, is_official } = req.body;
+    db.run(`UPDATE events 
+     SET title = ?, description = ?, venue = ?, address = ?, city = ?, country = ?, 
+         event_date = ?, event_end_date = ?, category = ?, image_url = ?, status = ?, is_official = ?, updated_at = CURRENT_TIMESTAMP 
+     WHERE id = ?`, [
+        title,
+        description,
+        venue,
+        address,
+        city,
+        country,
+        event_date,
+        event_end_date,
+        category,
+        image_url,
+        status,
+        is_official ? 1 : 0,
+        id
+    ], function (err) {
+        if (err)
             return res.status(500).json({ error: 'Database error' });
-        }
-        if (this.changes === 0) {
+        if (this.changes === 0)
             return res.status(404).json({ error: 'Event not found' });
-        }
-        res.json({ message: 'Event updated successfully' });
+        res.json({ message: 'Event updated successfully', is_official: is_official ? 1 : 0 });
     });
 });
 router.delete('/:id', (req, res) => {

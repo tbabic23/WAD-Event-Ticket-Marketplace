@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("./index"));
-const PORT = 3000;
+const PORT = 12150;
 index_1.default.listen(PORT, () => {
     console.log(`Server listening on http://localhost:${PORT}`);
 });
