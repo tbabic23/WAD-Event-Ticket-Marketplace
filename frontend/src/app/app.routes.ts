@@ -8,6 +8,7 @@ import { AboutComponent } from "./components/aboutus";
 import { ProfileComponent } from './components/profile';
 import { AdminComponent } from './components/adminpage';
 import { ScanComponent } from './components/scan';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -16,6 +17,6 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'tickets', component: MarketplaceComponent },
     { path: 'about', component: AboutComponent },
-    { path: 'admin', component: AdminComponent },
+    { path: 'admin', component: AdminComponent, canActivate: [adminGuard] },
     { path: 'scan', component: ScanComponent },
     { path: '**', redirectTo: '' }];

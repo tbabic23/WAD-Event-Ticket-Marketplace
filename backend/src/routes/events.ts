@@ -261,7 +261,7 @@ router.post('/', (req, res) => {
 
   db.run(
     'INSERT INTO events (creator_id, title, description, venue, address, city, country, event_date, event_end_date, category, image_url, status, confirmed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [creator_id, title, description, venue, address, city, country, event_date, event_end_date, category, image_url, 'active', 1],
+    [creator_id, title, description, venue, address, city, country, event_date, event_end_date, category, image_url, 'active', 0],
     function(err) {
       if (err) {
         console.error('Event creation error:', err);
