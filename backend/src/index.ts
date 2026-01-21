@@ -19,10 +19,14 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', adminPanelRouter); 
 app.use('/api/events', eventsRouter);
 
-app.use(express.static(path.join(__dirname, '../../frontend/dist/frontend')));
+app.use(express.static(path.join(__dirname, '../../frontend/dist/frontend/browser')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/dist/frontend/index.html'));
+// Catch-all handler: send back index.html for any non-API routes (for SPA routing)
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, '../../frontend/dist/frontend/browser/index.html'));
 });
 
 export default app;

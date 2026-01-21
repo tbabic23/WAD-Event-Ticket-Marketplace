@@ -20,10 +20,12 @@ app.use('/api', test_1.router);
 app.use('/api/auth', auth_1.router);
 app.use('/api/user', user_1.router);
 app.use('/api/events', events_1.router);
-// Serve static files from the frontend build
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontend/dist/frontend')));
 // Catch-all handler: send back index.html for any non-API routes (for SPA routing)
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+        return next();
+    }
     res.sendFile(path_1.default.join(__dirname, '../../frontend/dist/frontend/index.html'));
 });
 exports.default = app;
