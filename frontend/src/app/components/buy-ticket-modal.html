@@ -17,7 +17,7 @@
         <div *ngIf="isLoading" class="loading">Loading...</div>
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
-      <!-- Step 1: Select Tickets -->
+
       <div *ngIf="step === 1 && !isLoading">
         <h3>Select Ticket Type</h3>
         <div class="ticket-types">
@@ -41,7 +41,7 @@
         <button class="next-btn" (click)="nextStep()">Next</button>
       </div>
 
-      <!-- Step 2: Payment -->
+
       <div *ngIf="step === 2">
         <h3>Payment Information</h3>
         <div class="payment-form">

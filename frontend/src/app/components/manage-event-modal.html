@@ -19,7 +19,7 @@
 
         <div *ngIf="isLoading" class="loading">Loading...</div>
 
-        <!-- Event Info Tab -->
+
         <div *ngIf="!isLoading && event && activeTab === 'info'" class="tab-content">
             <div class="event-details">
                 <div class="detail-row">
@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <!-- All Tickets Tab -->
+
         <div *ngIf="activeTab === 'tickets'" class="tab-content">
             <h3>All Purchased Tickets</h3>
             <p class="tab-description">View and manage all tickets for this event</p>
@@ -144,7 +144,6 @@
             </div>
         </div>
 
-        <!-- Scan Ticket Tab -->
         <div *ngIf="activeTab === 'scan'" class="tab-content">
             <h3>Scan Ticket</h3>
             <p class="tab-description">Enter ticket code to verify and check in</p>

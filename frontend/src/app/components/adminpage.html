@@ -1,7 +1,7 @@
 ﻿<div class="admin-container">
 
 
-    <!-- Sidebar -->
+
     <aside class="sidebar" [class.open]="sidebarOpen">
         <div class="sidebar-logo">
             <a routerLink="/" class="logo-link">TicketMarket</a>
@@ -18,12 +18,12 @@
         </nav>
     </aside>
 
-    <!-- Main content -->
+
     <main class="content" [class.shift]="sidebarOpen">
         <h3>{{ menuItems[selectedIndex].title }}</h3>
         <p>{{ menuItems[selectedIndex].content }}</p>
 
-        <!-- Manage Events -->
+
         <div *ngIf="menuItems[selectedIndex].title === 'Manage Events'">
             <table>
                 <tr>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <!-- Manage Users -->
+
         <div *ngIf="menuItems[selectedIndex].title === 'Manage Users'">
             <table>
                 <tr>
@@ -144,7 +144,7 @@
             </div>
         </div>
 
-        <!-- Manage Tickets -->
+
         <div *ngIf="menuItems[selectedIndex].title === 'Manage Tickets'">
             <div class="tickets-filters">
                 <input

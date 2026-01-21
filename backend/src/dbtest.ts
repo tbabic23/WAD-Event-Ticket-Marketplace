@@ -6,6 +6,5 @@ const db = new sqlite3.Database(dbPath);
 
 db.all('SELECT * FROM users', [], (err, rows) => {
   if (err) return console.error(err);
-  console.log(rows);
   db.close();
 });

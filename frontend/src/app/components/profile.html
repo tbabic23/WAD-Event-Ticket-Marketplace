@@ -15,7 +15,7 @@
             </button>
         </div>
 
-        <!-- Profile Tab -->
+
         <div *ngIf="activeTab === 'profile'" class="tab-content">
             <h1>Profile</h1>
             <p>Manage your account</p>
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <!-- My Tickets Tab -->
+
         <div *ngIf="activeTab === 'tickets'" class="tab-content">
             <h1>My Tickets</h1>
             <p>View and manage your event tickets</p>
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <!-- My Orders Tab -->
+
         <div *ngIf="activeTab === 'orders'" class="tab-content">
             <h1>My Orders</h1>
             <p>View your order history</p>
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-        <!-- My Events Tab -->
+
         <div *ngIf="activeTab === 'events'" class="tab-content">
             <h1>My Events</h1>
             <p>Manage your events and scan tickets</p>
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-    <!-- QR Code Modal -->
+
     <div *ngIf="selectedTicketQR" class="qr-modal-overlay" (click)="closeQR()">
         <div class="qr-modal-content" (click)="$event.stopPropagation()">
             <div class="qr-modal-header">
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <!-- Scan Modal -->
+
     <div *ngIf="showScanModal" class="qr-modal-overlay" (click)="closeScanModal()">
         <div class="scan-modal-content" (click)="$event.stopPropagation()">
             <div class="qr-modal-header">
